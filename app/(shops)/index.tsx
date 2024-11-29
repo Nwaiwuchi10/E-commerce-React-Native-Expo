@@ -3,6 +3,7 @@ import React from "react";
 
 import ProductListItem from "@/components/Products/Products";
 import { PRODUCTS } from "@/assets/products";
+import ListHeader from "@/components/ListHeader/ListHeader";
 
 const Home = () => {
   return (
@@ -16,7 +17,8 @@ const Home = () => {
         )}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
-        ListHeaderComponent={<Text>Products</Text>}
+        // ListHeaderComponent={<Text>Products</Text>}
+        ListHeaderComponent={ListHeader}
         contentContainerStyle={styles.flatListContent}
         columnWrapperStyle={styles.flatListColumn}
         style={{ paddingHorizontal: 10, paddingVertical: 5 }}
