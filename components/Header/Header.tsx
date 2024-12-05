@@ -4,51 +4,55 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  FlatList,
   View,
 } from "react-native";
 import React from "react";
+import { useCartStore } from "@/store/cart-store";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { CATEGORIES } from "@/assets/categories";
-import { useCartStore } from "@/store/cart-store";
-import Header from "../Header/Header";
-const ListHeader = () => {
+
+const Header = () => {
   const { getItemCount } = useCartStore();
   return (
-    <View style={[styles.headerContainer]}>
-      <Header />
-      <View style={styles.heroContainer}>
-        <Image
-          source={require("../../assets/images/hero.png")}
-          style={styles.heroImage}
-        />
-      </View>
-      <View style={styles.categoriesContainer}>
-        <Text style={styles.sectionTitle}>Categories</Text>
-        <FlatList
-          data={CATEGORIES}
-          renderItem={({ item }) => (
-            <Link asChild href={`/categories/${item.slug}`}>
-              <Pressable style={styles.category}>
-                <Image
-                  source={{ uri: item.imageUrl }}
-                  style={styles.categoryImage}
-                />
-                <Text style={styles.categoryText}>{item.name}</Text>
-              </Pressable>
-            </Link>
-          )}
-          keyExtractor={(item) => item.name}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
+    <View>
+      <View style={styles.headerTop}>
+        <View style={styles.headerLeft}>
+          <View style={styles.avatarContainer}>
+            <Image
+              source={{ uri: "https://via.placeholder.com/40" }}
+              style={styles.avatarImage}
+            />
+            <Text>Hello N'Chrys</Text>
+          </View>
+        </View>
+        <View style={styles.headerRight}>
+          <Link style={styles.cartContainer} href="/cart" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <View>
+                  <FontAwesome
+                    name="shopping-cart"
+                    size={25}
+                    color="purple"
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                  <View style={styles.badgeContainer}>
+                    <Text style={styles.badgeText}> {getItemCount()}</Text>
+                  </View>
+                </View>
+              )}
+            </Pressable>
+          </Link>
+          <TouchableOpacity style={styles.signOutButton}>
+            <FontAwesome name="sign-out" size={25} color="red" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
 
-export default ListHeader;
+export default Header;
 
 const styles = StyleSheet.create({
   headerContainer: {
